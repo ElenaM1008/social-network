@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { PostsPage } from './pages/posts';
 import { Root } from './components/Root';
-import { AddPostPage } from './pages/posts/add';
 import { AuthPage } from './pages/auth';
 import { RegistrationPage } from './pages/registration';
 import { store } from './redux/store'
@@ -29,10 +28,6 @@ const router = createBrowserRouter([
 			{
 				path: 'posts',
 				element: <PostsPage />
-			},
-			{
-				path: 'posts/add',
-				element: <AddPostPage />
 			},
 			{
 				path: 'myprofile',

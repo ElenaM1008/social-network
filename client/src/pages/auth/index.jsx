@@ -43,7 +43,7 @@ export const AuthPage = () => {
   };
 
   return (
-    <div>
+    <>
       <SC.Form noValidate onSubmit={handleSubmit(onSubmit)}>
         <SC.Label>
           <p>E-MAIL</p>
@@ -81,6 +81,6 @@ export const AuthPage = () => {
         </SC.Label>
         <SC.Button type="submit">Вход</SC.Button>
       </SC.Form>
-    </div>
+    </>
   );
 };

@@ -23,7 +23,6 @@ class UsersController {
 				} else {
 					users = []
 				}
-
 			}
 
 			if ('friends' in req.query) {

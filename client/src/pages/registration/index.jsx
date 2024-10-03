@@ -154,10 +154,6 @@ export const RegistrationPage = () => {
                 value: true,
                 message: "Это поле обязательное",
               },
-              pattern: {
-                value: /\+?[0-9\s\-\(\)]+/,
-                message: "Заполните номер телефона",
-              },
             })}
           />
           <SC.Error>{errors.phone && errors.phone.message}</SC.Error>

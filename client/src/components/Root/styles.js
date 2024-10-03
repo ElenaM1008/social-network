@@ -28,3 +28,20 @@ export const MenuItem = styled(NavLink)`
 		border-radius: 15px;
 	}
 `
+
+export const Welcome = styled.div`
+   font-size:16px;
+	color:white;
+	font-weight:600;
+`
+
+export const Button = styled.button`
+   width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	border:none;
+	font-size:16px;
+	font-weight:600;
+	background: #d0d3db;
+	cursor: pointer;	
+`
