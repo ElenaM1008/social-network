@@ -10,6 +10,8 @@ export const AddPost = () => {
 
   const [post, setPost] = useState("");
 
+  const [visibility, setVisibility] = useState("");
+
   const addPost = async () => {
     try {
       const res = await fetch(
@@ -24,6 +26,7 @@ export const AddPost = () => {
             text: post,
             owner: currentUser._id,
             id: uuidv4(),
+				visibility: visibility,
           }),
         }
       );
@@ -48,6 +51,24 @@ export const AddPost = () => {
         onChange={(e) => setPost(e.target.value)}
         placeholder="Что у вас нового?"
       />
+		<SC.RadioInput>
+            Виден только друзьям
+            <input
+              type="radio"
+				  name="visibility"
+              id="private"
+              value="private"
+              onChange={(e) => setVisibility(e.target.value)}
+            />
+            Виден всем
+            <input
+              type="radio"
+				  name="visibility"
+              value="public"
+              id="public"
+              onChange={(e) => setVisibility(e.target.value)}
+            />
+          </SC.RadioInput>
       <SC.Button onClick={addPost}>Добавить</SC.Button>
     </>
   );

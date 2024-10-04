@@ -21,3 +21,11 @@ export const Button = styled.button`
 		background: #6885ed;
 	}	
 `
+export const RadioInput = styled.div`
+   width:400px;
+	display:flex;
+	gap:5px;
+	align-items: center;
+	font-weight:600;
+	color:black;
+`
