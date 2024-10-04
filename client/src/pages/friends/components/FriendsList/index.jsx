@@ -6,8 +6,11 @@ import * as SC from "./styles";
 
 export const FriendsList = () => {
   const { data } = useSelector((state) => state.friends);
+  const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const noFriends = currentUser.friends.length <= 0;
 
   const userDetail = async (id) => {
     try {
@@ -36,8 +39,10 @@ export const FriendsList = () => {
   };
 
   return (
-    <>
-      {data.map((item) => (
+    <SC.List>
+      { noFriends ? <p>Пока нет друзей</p>
+		:
+		data.map((item) => (
         <SC.CardUser key={item._id}>
           <SC.UserLinks onClick={() => userDetail(item._id)}>
             <SC.UserLink>
@@ -46,6 +51,6 @@ export const FriendsList = () => {
           </SC.UserLinks>
         </SC.CardUser>
       ))}
-    </>
+    </SC.List>
   );
 };

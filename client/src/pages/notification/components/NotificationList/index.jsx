@@ -11,6 +11,8 @@ export const NotificationList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const noNotification = currentUser.notification.length <= 0 
+
   const acceptFriends = async (id) => {
     try {
       const res = await fetch(
@@ -67,8 +69,10 @@ export const NotificationList = () => {
   };
 
   return (
-    <>
-      {data.map((item) => (
+    <SC.List>
+      { noNotification ? <p>Пока нет уведомлений</p>
+		:
+		 data.map((item) => (
         <SC.CardUser key={item._id}>
           <SC.UserLinks onClick={() => userDetail(item._id)}>
             <SC.UserLink>
@@ -80,6 +84,6 @@ export const NotificationList = () => {
           </SC.AddButton>
         </SC.CardUser>
       ))}
-    </>
+    </SC.List>
   );
 };

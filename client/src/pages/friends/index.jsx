@@ -4,11 +4,12 @@ import { noFriends, getAllFriends } from "../../redux/slices/friendsSlices";
 import * as SC from "./styles";
 import { Title } from "../../components/ui/Title";
 import { FriendsList } from "./components/FriendsList";
+import { NavBar } from "../../components/NavBar";
 
 export const MyFriends = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (currentUser.friends.length) {
       dispatch(getAllFriends({ arr: currentUser.friends }));
@@ -19,8 +20,11 @@ export const MyFriends = () => {
 
   return (
     <SC.Container>
-      <Title title={"Мои друзья"} />
-       <FriendsList/>
+      <NavBar />
+      <SC.Content>
+        <Title title={"Мои друзья"} />
+        <FriendsList />
+      </SC.Content>
     </SC.Container>
   );
 };

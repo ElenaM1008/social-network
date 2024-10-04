@@ -61,7 +61,7 @@ export const RegistrationPage = () => {
     <>
       <SC.Form noValidate onSubmit={handleSubmit(onSubmit)}>
         <SC.Label>
-          <p>ЗАЙТИ КАК:</p>
+          <p>ЗAРЕГИСТРИРОВАТЬСЯ КАК:</p>
           <SC.RadioInput>
             АДМИН
             <input

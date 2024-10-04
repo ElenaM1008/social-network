@@ -17,11 +17,11 @@ export const SearchInput = () => {
   }, [search, currentUser, dispatch]);
 
   return (
-        <SC.SearchInput
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          type="text"
-			 placeholder="Поиск"
-        />
+    <SC.SearchInput
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      type="text"
+      placeholder="Поиск"
+    />
   );
 };
