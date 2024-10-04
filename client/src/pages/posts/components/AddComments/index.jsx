@@ -49,7 +49,7 @@ export const AddComments = () => {
           },
           body: JSON.stringify({
             content: comment,
-            autor: currentUser.name,
+            author: currentUser.name,
             postId: id,
           }),
         }
@@ -81,7 +81,7 @@ export const AddComments = () => {
                 {currentUser.comments.map((comment, index) =>
                   post.id === comment.postId ? (
                     <SC.CommentText key={index}>
-                      <SC.Autor>{comment.autor}</SC.Autor>
+                      <SC.Autor>{comment.author}</SC.Autor>
                       <span>{comment.content}</span>
                     </SC.CommentText>
                   ) : (

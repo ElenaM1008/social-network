@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import * as SC from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../../../redux/slices/detailUserSlices";
+import { PublicPosts } from "./components/PublicPosts";
+import { PrivatePosts } from "./components/PrivatePosts";
 
 export const UserPosts = () => {
   const dispatch = useDispatch();
@@ -9,6 +11,8 @@ export const UserPosts = () => {
   const { currentUser } = useSelector((state) => state.auth);
 
   const [comment, setComment] = useState("");
+
+  const isItMyFriend = data.friends.includes(currentUser._id);
 
   const deletePost = async (id) => {
     try {
@@ -50,7 +54,7 @@ export const UserPosts = () => {
           },
           body: JSON.stringify({
             content: comment,
-            autor: currentUser.name,
+            author: currentUser.name,
             postId: id,
           }),
         }
@@ -70,43 +74,22 @@ export const UserPosts = () => {
   };
 
   return (
-      <SC.Posts>
-        {data.posts &&
-          data.posts.map((post) => (
-            <div key={post.id}>
-              <SC.ContentPost>
-                {currentUser.userType === "admin" ? (
-                  <SC.DeleteIcon onClick={() => deletePost(post.id)}>
-                    x
-                  </SC.DeleteIcon>
-                ) : null}
-                <SC.PostText>{post.text}</SC.PostText>
-              </SC.ContentPost>
-              <SC.ContentComments>
-                <b>Комментарии:</b>
-                {data.comments.map((comment, index) =>
-                  post.id === comment.postId ? (
-                    <SC.CommentText key={index}>
-                      <SC.Autor>{comment.autor}</SC.Autor>
-                      <span>{comment.content}</span>
-                    </SC.CommentText>
-                  ) : (
-                    ""
-                  )
-                )}
-              </SC.ContentComments>
-              <SC.TextareaAndBut>
-                <SC.Textarea
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Комментировать пост"
-                />
-                <SC.Button onClick={() => addComment(post.id)}>
-                  Отправить
-                </SC.Button>
-              </SC.TextareaAndBut>
-            </div>
-          ))}
-      </SC.Posts>
+    <SC.Posts>
+      {isItMyFriend ? (
+        <PrivatePosts
+          comment={comment}
+          setComment={setComment}
+          deletePost={deletePost}
+          addComment={addComment}
+        />
+      ) : (
+        <PublicPosts
+          comment={comment}
+          setComment={setComment}
+          deletePost={deletePost}
+          addComment={addComment}
+        />
+      )}
+    </SC.Posts>
   );
 };

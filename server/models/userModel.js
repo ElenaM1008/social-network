@@ -57,7 +57,7 @@ const UserSchema = new Schema({
 	userType:{
 		type: String,
 		required: true
-	}
+	},
 })
 
 module.exports = model('User', UserSchema)
