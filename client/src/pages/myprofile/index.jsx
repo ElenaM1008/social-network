@@ -1,7 +1,7 @@
 import React from "react";
 import * as SC from "./styles";
 import { PostsPage } from "../posts";
-import { NavBar } from "./components/NavBar";
+import { NavBar } from '../../components/NavBar'
 import { Title } from "../../components/ui/Title";
 import { UserInfo } from "./components/UserInfo";
 

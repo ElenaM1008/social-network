@@ -20,7 +20,6 @@ export const Root = () => {
         {!currentUser && <SC.MenuItem to={"/"}>HOME</SC.MenuItem>}
         {!currentUser && <SC.MenuItem to={"/auth"}>Авторизация</SC.MenuItem>}
         {!currentUser && <SC.MenuItem to={"/registration"}>Регистрация</SC.MenuItem>}
-		  {currentUser && <SC.MenuItem to={"/myprofile"}>Me</SC.MenuItem>}
 		  {currentUser && <SC.Welcome>{`Добро пожаловать, ${currentUser.userType === 'admin' ? "Админ" : currentUser.name }!`}</SC.Welcome>}
         {currentUser && <SC.Button onClick={onClickExitBtn}>Выход</SC.Button>}
       </SC.Menu>

@@ -70,7 +70,9 @@ export const AddComments = () => {
 
   return (
         <>
-          {currentUser.posts.map((post) => (
+          { currentUser.posts.length <=0 ? <p>У вас пока нет постов</p>
+			 :
+			 currentUser.posts.map((post) => (
             <div key={post.id}>
 					<SC.ContentPost>
               <SC.PostText>{post.text}</SC.PostText>

@@ -1,26 +1,26 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { emptyNotification, getAllNotifications } from "../../redux/slices/notificationSlices";
+import { getAllNotifications } from "../../redux/slices/notificationSlices";
 import * as SC from "./styles";
 import { Title } from "../../components/ui/Title";
 import { NotificationList } from "./components/NotificationList";
+import { NavBar } from "../../components/NavBar";
 
 export const Notification = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentUser.notification.length) {
-      dispatch(getAllNotifications({ arr: currentUser.notification }));
-    } else {
-      dispatch(emptyNotification());
-    }
+    dispatch(getAllNotifications({ arr: currentUser.notification }));
   }, [currentUser, dispatch]);
 
   return (
     <SC.Container>
-      <Title title={"Уведомления"} />
-      <NotificationList />
+      <NavBar />
+      <SC.Content>
+        <Title title={"Уведомления"} />
+        <NotificationList />
+      </SC.Content>
     </SC.Container>
   );
 };

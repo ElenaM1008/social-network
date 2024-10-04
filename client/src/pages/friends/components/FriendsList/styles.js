@@ -1,10 +1,16 @@
 import styled from "styled-components";
 
+export const List = styled.div`
+   display:flex;
+	gap: 5px;
+   flex-wrap:wrap;
+`
+
 export const CardUser = styled.div`
    display:flex;
 	flex-direction: column;
 	justify-content: space-around;
-	width: 200px;
+	width: 150px;
 	height:150px;
 	border-radius: 3px;
 	border: 1px solid gray;

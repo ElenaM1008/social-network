@@ -10,7 +10,7 @@ export const CardUser = styled.div`
    display:flex;
 	flex-direction: column;
 	justify-content: space-around;
-	width: 200px;
+	width: 160px;
 	height:150px;
 	border-radius: 3px;
 	border: 1px solid gray;
@@ -35,10 +35,11 @@ export const UserLink = styled.li`
 export const AddButton = styled.button`
    cursor: pointer;
 	background:  #5a74d1;
-	width: 160px;
-	height:30px;
+	width: 120px;
+	height:40px;
 	border:none;
-	font-size:16px;
+	font-size:14px;
+	font-weight:600;
 	color: white;
 	border-radius: 7px;
 
