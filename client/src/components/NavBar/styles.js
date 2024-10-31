@@ -17,6 +17,9 @@ export const List = styled.ul`
    flex-direction: column;
    gap: 10px;
 	padding:7px;
+	@media (max-width: 430px){
+		align-items:center;
+	}
 `
 export const ListItem = styled.li`
    padding: 4px;

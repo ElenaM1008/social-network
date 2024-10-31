@@ -3,12 +3,11 @@ import * as SC from "./styles";
 import { useSelector } from "react-redux";
 
 export const PrivatePosts = ({
-	deletePost,
-	comment,
-	setComment,
-	addComment,
- }) => {
-
+  deletePost,
+  comment,
+  setComment,
+  addComment,
+}) => {
   const { data } = useSelector((state) => state.detail);
   const { currentUser } = useSelector((state) => state.auth);
 

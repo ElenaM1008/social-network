@@ -8,7 +8,6 @@ export const PublicPosts = ({
   setComment,
   addComment,
 }) => {
-	
   const { data } = useSelector((state) => state.detail);
   const { currentUser } = useSelector((state) => state.auth);
 

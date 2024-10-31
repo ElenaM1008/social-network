@@ -1,13 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch} from "react-redux";
 import { login } from "../../redux/slices/authSlices";
 import * as SC from "./styles";
 import { useForm } from "react-hook-form";
+import { FetchData } from "../../components/FetchData";
 
 export const AuthPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -15,31 +14,24 @@ export const AuthPage = () => {
     formState: { errors },
   } = useForm({ mode: "onTouched" });
 
+  const validatePassword = (value) => {
+    if (value.length < 8) {
+      return "Минимальная длина 8 символов";
+    }
+    return true;
+  };
+
+  const { fetchData } = FetchData();
+
   const onSubmit = async (data) => {
     const { ...other } = data;
-    try {
-      const res = await fetch("http://localhost:3003/api/users/auth/login", {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...other
-        }),
-      });
-		const json = await res.json();
-		
-      if (res.status !== 200) {
-        alert(json.message);
-        return;
-      }
-
-      dispatch(login((json)));
-      navigate("/myprofile");
-    } catch (error) {
-      console.log(error);
-    }
+    await fetchData({
+      ...other,
+      url: `http://localhost:3003/api/users/auth/login`,
+      method: "post",
+      cb: login,
+    });
+    navigate("/myprofile");
   };
 
   return (
@@ -50,10 +42,7 @@ export const AuthPage = () => {
           <SC.Input
             type="text"
             {...register("login", {
-              required: {
-                message: "Введите ваш e-mail",
-                value: true,
-              },
+              required: { message: "Введите ваш e-mail", value: true },
             })}
           />
           <SC.Error>{errors.login && errors.login.message}</SC.Error>
@@ -63,18 +52,8 @@ export const AuthPage = () => {
           <SC.Input
             type="text"
             {...register("password", {
-              required: {
-                message: "Введите пароль",
-                value: true,
-              },
-              maxLength: {
-                message: "Максимальная длина 20 символов",
-                value: 20,
-              },
-              minLength: {
-                message: "Минимальная длина 8 символов",
-                value: 8,
-              },
+              required: { message: "Введите пароль", value: true },
+              validate: validatePassword,
             })}
           />
           <SC.Error>{errors.password && errors.password.message}</SC.Error>

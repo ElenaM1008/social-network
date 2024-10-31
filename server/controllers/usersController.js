@@ -104,7 +104,7 @@ class UsersController {
 
 	async addComment(req, res) {
 		try {
-			const userId= req.params.id
+			const userId = req.params.id
 			const user = await UserModel.findById(userId)
 			const postID = req.body.postId
 
@@ -122,18 +122,18 @@ class UsersController {
 	async deletePost(req, res) {
 		try {
 			const postId = req.body.postId;
-			const userId= req.params.id
+			const userId = req.params.id
 			const user = await UserModel.findById(userId)
 
-			const postComments = user.comments.filter(item=> item.postId !== postId)
+			const postComments = user.comments.filter(item => item.postId !== postId)
 
-			const userModel = await UserModel.findByIdAndUpdate({ _id: userId }, { posts: user.posts.filter(item=> item.id !== postId) }, { returnDocument: 'after' })
+			const userModel = await UserModel.findByIdAndUpdate({ _id: userId }, { posts: user.posts.filter(item => item.id !== postId) }, { returnDocument: 'after' })
 
-			await userModel.save() 
+			await userModel.save()
 
-			const commentsModel = await UserModel.findByIdAndUpdate({ _id: userId }, { comments: postComments}, { returnDocument: 'after' })
+			const commentsModel = await UserModel.findByIdAndUpdate({ _id: userId }, { comments: postComments }, { returnDocument: 'after' })
 
-			await commentsModel.save() 
+			await commentsModel.save()
 
 			res.json(user)
 		} catch (e) {

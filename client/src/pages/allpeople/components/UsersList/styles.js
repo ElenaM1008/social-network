@@ -4,6 +4,10 @@ export const UsersArea = styled.div`
    display:flex;
 	gap: 5px;
    flex-wrap:wrap;
+	@media (max-width: 430px){
+		justify-content: space-around;
+		gap:10px;
+	}
 `
 
 export const CardUser = styled.div`

@@ -35,7 +35,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'detail',
-				element: <DetailUser/>
+				element: <DetailUser />
 			},
 			{
 				path: 'friends',

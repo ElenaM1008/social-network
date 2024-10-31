@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as SC from "./styles";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlices";
+import { FetchData } from "../../components/FetchData";
 
 const SECRET_KEY = "AdminE1008Ch";
 
@@ -12,7 +12,6 @@ export const RegistrationPage = () => {
   const [secretKey, setSecretKey] = useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -20,40 +19,37 @@ export const RegistrationPage = () => {
     formState: { errors },
   } = useForm({ mode: "onTouched" });
 
-  const onSubmit = async (data) => {
+  const validatePassword = (value) => {
+    if (value.length < 8) {
+      return "Минимальная длина 8 символов";
+    }
+    return true;
+  };
 
+  const validateNameSurname = (value) => {
+    if (value.length < 2) {
+      return "Минимальная длина 2 символа";
+    } else if (value.length > 20) {
+      return "Максимальная длина 20 символов";
+    }
+    return true;
+  };
+
+  const { fetchData } = FetchData();
+
+  const onSubmit = async (data) => {
     if (userType === "admin" && secretKey !== SECRET_KEY) {
       alert("Неверный ключ от админа");
     } else {
+      const { ...other } = data;
 
-		const { ...other } = data;
-
-      try {
-        const res = await fetch(
-          "http://localhost:3003/api/users/auth/register",
-          {
-            method: "post",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...other,
-            }),
-          }
-        );
-        const json = await res.json();
-
-        if (res.status !== 200) {
-          alert(json.message);
-          return;
-        }
-
-        dispatch(login(json));
-        navigate("/myprofile");
-      } catch (error) {
-        console.log(error);
-      }
+      await fetchData({
+        ...other,
+        url: `http://localhost:3003/api/users/auth/register`,
+        method: "post",
+        cb: login,
+      });
+      navigate("/myprofile");
     }
   };
 
@@ -61,30 +57,34 @@ export const RegistrationPage = () => {
     <>
       <SC.Form noValidate onSubmit={handleSubmit(onSubmit)}>
         <SC.Label>
-          <p>ЗAРЕГИСТРИРОВАТЬСЯ КАК:</p>
+          ЗAРЕГИСТРИРОВАТЬСЯ КАК:
           <SC.RadioInput>
-            АДМИН
-            <input
-              type="radio"
-              {...register("userType", {
-                required: { value: true, message: "Выберите роль" },
-              })}
-              id="admin"
-              value="admin"
-              onChange={(e) => setUserType(e.target.value)}
-            />
-            ПОЛЬЗОВАТЕЛЬ
-            <input
-              type="radio"
-              {...register("userType", {
-                required: { value: true, message: "Выберите роль" },
-              })}
-              value="user"
-              id="user"
-              onChange={(e) => setUserType(e.target.value)}
-            />
-            <SC.Error>{errors.userType && errors.userType.message}</SC.Error>
+            <SC.RadioLabel>
+              АДМИН
+              <input
+                type="radio"
+                {...register("userType", {
+                  required: { value: true, message: "Выберите роль" },
+                })}
+                id="admin"
+                value="admin"
+                onChange={(e) => setUserType(e.target.value)}
+              />
+            </SC.RadioLabel>
+            <SC.RadioLabel>
+              ПОЛЬЗОВАТЕЛЬ
+              <input
+                type="radio"
+                {...register("userType", {
+                  required: { value: true, message: "Выберите роль" },
+                })}
+                value="user"
+                id="user"
+                onChange={(e) => setUserType(e.target.value)}
+              />
+            </SC.RadioLabel>
           </SC.RadioInput>
+          <SC.Error>{errors.userType && errors.userType.message}</SC.Error>
         </SC.Label>
         {userType === "admin" ? (
           <SC.Label>
@@ -92,10 +92,7 @@ export const RegistrationPage = () => {
             <SC.Input
               type="text"
               {...register("secret", {
-                required: {
-                  message: "Введите пароль",
-                  value: true,
-                },
+                required: { message: "Введите пароль", value: true },
               })}
               value={secretKey}
               onChange={(e) => setSecretKey(e.target.value)}
@@ -108,18 +105,8 @@ export const RegistrationPage = () => {
           <SC.Input
             type="text"
             {...register("name", {
-              required: {
-                message: "Введите свое имя!",
-                value: true,
-              },
-              maxLength: {
-                message: "Максимальная длина 20 символов",
-                value: 20,
-              },
-              minLength: {
-                message: "Минимальная длина 2 символа",
-                value: 2,
-              },
+              required: { message: "Введите свое имя!", value: true },
+              validate: validateNameSurname,
             })}
           />
           <SC.Error>{errors.name && errors.name.message}</SC.Error>
@@ -129,18 +116,8 @@ export const RegistrationPage = () => {
           <SC.Input
             type="text"
             {...register("surname", {
-              required: {
-                message: "Введите свою фамилию!",
-                value: true,
-              },
-              maxLength: {
-                message: "Максимальная длина 30 символов",
-                value: 30,
-              },
-              minLength: {
-                message: "Минимальная длина 2 символа",
-                value: 2,
-              },
+              required: { message: "Введите свою фамилию!", value: true },
+              validate: validateNameSurname,
             })}
           />
           <SC.Error>{errors.surname && errors.surname.message}</SC.Error>
@@ -150,10 +127,7 @@ export const RegistrationPage = () => {
           <SC.Input
             type="tel"
             {...register("phone", {
-              required: {
-                value: true,
-                message: "Это поле обязательное",
-              },
+              required: { value: true, message: "Это поле обязательное" },
             })}
           />
           <SC.Error>{errors.phone && errors.phone.message}</SC.Error>
@@ -179,38 +153,39 @@ export const RegistrationPage = () => {
           <SC.Error>{errors.city && errors.city.message}</SC.Error>
         </SC.Label>
         <SC.Label>
-          <p>ПОЛ</p>
+          ПОЛ
           <SC.RadioInput>
-            МУЖСКОЙ
-            <input
-              type="radio"
-              {...register("gender", {
-                required: { value: true, message: "Выберите пол" },
-              })}
-              id="men"
-              value="мужской"
-            />
-            ЖЕНСКИЙ
-            <input
-              type="radio"
-              {...register("gender", {
-                required: { value: true, message: "Выберите пол" },
-              })}
-              value="женский"
-              id="women"
-            />
-            <SC.Error>{errors.gender && errors.gender.message}</SC.Error>
+            <SC.RadioLabel>
+              МУЖСКОЙ
+              <input
+                type="radio"
+                {...register("gender", {
+                  required: { value: true, message: "Выберите пол" },
+                })}
+                id="men"
+                value="мужской"
+              />
+            </SC.RadioLabel>
+            <SC.RadioLabel>
+              ЖЕНСКИЙ
+              <input
+                type="radio"
+                {...register("gender", {
+                  required: { value: true, message: "Выберите пол" },
+                })}
+                value="женский"
+                id="women"
+              />
+            </SC.RadioLabel>
           </SC.RadioInput>
+          <SC.Error>{errors.gender && errors.gender.message}</SC.Error>
         </SC.Label>
         <SC.Label>
           <p>E-MAIL</p>
           <SC.Input
             type="text"
             {...register("login", {
-              required: {
-                message: "Введите ваш e-mail",
-                value: true,
-              },
+              required: { message: "Введите ваш e-mail", value: true },
             })}
           />
           <SC.Error>{errors.login && errors.login.message}</SC.Error>
@@ -220,18 +195,8 @@ export const RegistrationPage = () => {
           <SC.Input
             type="text"
             {...register("password", {
-              required: {
-                message: "Введите пароль",
-                value: true,
-              },
-              maxLength: {
-                message: "Максимальная длина 20 символов",
-                value: 20,
-              },
-              minLength: {
-                message: "Минимальная длина 8 символов",
-                value: 8,
-              },
+              required: { message: "Введите пароль", value: true },
+              validate: validatePassword,
             })}
           />
           <SC.Error>{errors.password && errors.password.message}</SC.Error>
