@@ -29,3 +29,7 @@ export const RadioInput = styled.div`
 	font-weight:600;
 	color:black;
 `
+export const RadioLabel = styled.label`
+	font-size: 10px;
+	margin-top: 10px;
+`

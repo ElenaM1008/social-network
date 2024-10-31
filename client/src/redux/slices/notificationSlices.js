@@ -25,9 +25,9 @@ const notificationSlice = createSlice({
 		error: '',
 	},
 	reducers: {
-		emptyNotification : (state) => {
+		emptyNotification: (state) => {
 			state.data = []
-	  }
+		}
 	},
 	extraReducers: (builder) => {
 		builder

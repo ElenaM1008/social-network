@@ -25,9 +25,9 @@ const friendsSlice = createSlice({
 		error: '',
 	},
 	reducers: {
-		noFriends : (state) => {
+		noFriends: (state) => {
 			state.data = []
-	  }
+		}
 	},
 	extraReducers: (builder) => {
 		builder

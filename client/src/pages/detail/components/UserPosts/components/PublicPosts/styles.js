@@ -5,6 +5,9 @@ export const Textarea = styled.textarea`
    width: 80%;
    resize: none;
    height: 150px;
+	@media (max-width: 430px){
+		width: 65%;
+	}
 `
 
 export const Button = styled.button`

@@ -5,4 +5,7 @@ export const Posts = styled.div`
 	flex-direction:column;
 	gap:10px;
 	width:70%;
+	@media (max-width: 430px){
+		width:100%;
+	}
 `

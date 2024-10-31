@@ -8,12 +8,12 @@ import { NavBar } from "../../components/NavBar";
 export const AllPeople = () => {
   return (
     <SC.Container>
-		<NavBar/>
-		<SC.Content>
-      <Title title={'Поиск друзей'}/>
-      <SearchInput />
-      <UsersList />
-		</SC.Content>
+      <NavBar />
+      <SC.Content>
+        <Title title={"Поиск друзей"} />
+        <SearchInput />
+        <UsersList />
+      </SC.Content>
     </SC.Container>
   );
 };

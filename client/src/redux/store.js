@@ -6,11 +6,11 @@ import friendsReducer from './slices/friendsSlices'
 import detailUserReducer from './slices/detailUserSlices'
 
 export const store = configureStore({
-  reducer: {
-	auth: authReducer,
-	findUser: findUsersReducer,
-	notification: notificationReducer,
-	friends: friendsReducer,
-	detail: detailUserReducer,
-  },
+	reducer: {
+		auth: authReducer,
+		findUser: findUsersReducer,
+		notification: notificationReducer,
+		friends: friendsReducer,
+		detail: detailUserReducer,
+	},
 })

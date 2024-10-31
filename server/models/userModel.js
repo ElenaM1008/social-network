@@ -42,7 +42,7 @@ const UserSchema = new Schema({
 		type: Array,
 		default: []
 	},
-	comments:{
+	comments: {
 		type: Array,
 		default: []
 	},
@@ -54,7 +54,7 @@ const UserSchema = new Schema({
 		type: Array,
 		default: []
 	},
-	userType:{
+	userType: {
 		type: String,
 		required: true
 	},
